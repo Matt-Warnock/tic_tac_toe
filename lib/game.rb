@@ -10,6 +10,9 @@ class Game
   end
   
   def play_turn(player_id, coordinate)
-    @grid[coordinate-1] = player_id
+    index = coordinate - 1
+    return unless @grid[index] == nil 
+
+    @grid[index] = player_id
   end
 end
