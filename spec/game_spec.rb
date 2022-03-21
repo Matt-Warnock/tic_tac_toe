@@ -13,8 +13,9 @@ RSpec.describe Game do
     it 'doesnt record over an existing game turn' do
       game = described_class.new
       game.play_turn(:x, 1)
-      
-      expect { game.play_turn(:o, 1) }.not_to change { game.grid[0] }
+
+      expect { game.play_turn(:o, 1) }
+        .not_to(change { game.grid[0] })
     end
   end
 end
