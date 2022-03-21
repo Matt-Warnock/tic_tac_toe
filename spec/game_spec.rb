@@ -10,12 +10,22 @@ RSpec.describe Game do
         .from(nil).to(:x)
     end
 
-    it 'doesnt record over an existing game turn' do
+    it 'raises error if existing game turn on coordinate' do
       game = described_class.new
       game.play_turn(:x, 1)
 
       expect { game.play_turn(:o, 1) }
-        .not_to(change { game.grid[0] })
+        .to raise_error('Position already taken')
+    end
+
+    it 'raises error if invalid coordinate too low' do
+      expect { subject.play_turn(:o, 0) }
+        .to raise_error('Invalid position')
+    end
+
+    it 'raises error if invalid coordinate too high' do
+      expect { subject.play_turn(:o, 10) }
+        .to raise_error('Invalid position')
     end
   end
 end

@@ -8,9 +8,15 @@ class Game
   end
 
   def play_turn(player_id, coordinate)
-    index = coordinate - 1
-    return unless @grid[index].nil?
+    validate_play(coordinate)
 
-    @grid[index] = player_id
+    @grid[coordinate - 1] = player_id
+  end
+
+  private
+
+  def validate_play(coordinate)
+    raise 'Invalid position' unless (1..9).include?(coordinate)
+    raise 'Position already taken' unless @grid[coordinate - 1].nil?
   end
 end
