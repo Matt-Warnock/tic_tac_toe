@@ -5,6 +5,11 @@ class Game
 
   def initialize
     @grid = []
+    @row_coordinates = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ]
   end
 
   def play_turn(player_id, coordinate)
@@ -14,11 +19,15 @@ class Game
   end
 
   def evaluate_game_state
-    if @grid[0] == @grid[1] && @grid[0] == @grid[2] && !@grid[0].nil?
-      [1, 2, 3]
-    else
-      []
+    won_rows = @row_coordinates.select do |coordinate|
+      @grid[coordinate[0]] == @grid[coordinate[1]] &&
+        @grid[coordinate[0]] == @grid[coordinate[2]] &&
+        !@grid[coordinate[2]].nil?
     end
+
+    return won_rows.first unless won_rows.empty?
+
+    []
   end
 
   private
