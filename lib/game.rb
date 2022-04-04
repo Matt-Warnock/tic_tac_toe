@@ -13,6 +13,14 @@ class Game
     @grid[coordinate - 1] = player_id
   end
 
+  def evaluate_game_state
+    if @grid[0] == @grid[1] && @grid[0] == @grid[2] && !@grid[0].nil?
+      [1, 2, 3]
+    else
+      []
+    end
+  end
+
   private
 
   def validate_play(coordinate)

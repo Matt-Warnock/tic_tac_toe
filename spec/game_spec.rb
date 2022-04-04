@@ -28,4 +28,21 @@ RSpec.describe Game do
         .to raise_error('Invalid position')
     end
   end
+
+  describe '#evaluate_game_state' do
+    it 'confirms first row win' do
+      game = described_class.new
+      game.play_turn(:x, 1)
+      game.play_turn(:x, 2)
+      game.play_turn(:x, 3)
+
+      expect(game.evaluate_game_state).to eq([1, 2, 3])
+    end
+
+    it 'returns empty array if no win evaluated' do
+      game = described_class.new
+
+      expect(game.evaluate_game_state).to eq([])
+    end
+  end
 end
