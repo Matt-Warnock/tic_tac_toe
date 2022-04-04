@@ -15,7 +15,7 @@ class Game
   def play_turn(player_id, coordinate)
     validate_play(coordinate)
 
-    @grid[coordinate - 1] = player_id
+    @grid[coordinate] = player_id
   end
 
   def evaluate_game_state
@@ -32,7 +32,7 @@ class Game
   private
 
   def validate_play(coordinate)
-    raise 'Invalid position' unless (1..9).include?(coordinate)
-    raise 'Position already taken' unless @grid[coordinate - 1].nil?
+    raise 'Invalid position' unless (0..8).include?(coordinate)
+    raise 'Position already taken' unless @grid[coordinate].nil?
   end
 end
