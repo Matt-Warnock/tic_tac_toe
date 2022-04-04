@@ -21,7 +21,7 @@ class Game
   def evaluate_game_state
     won_rows = @row_coordinates.select do |coordinate|
       row = [@grid[coordinate[0]], @grid[coordinate[1]], @grid[coordinate[2]]]
-      next if row.any?(&:nil?)
+      next if row.any?(nil)
 
       row.uniq.length == 1
     end
