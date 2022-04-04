@@ -20,14 +20,13 @@ class Game
 
   def evaluate_game_state
     won_rows = @row_coordinates.select do |coordinate|
-      @grid[coordinate[0]] == @grid[coordinate[1]] &&
-        @grid[coordinate[0]] == @grid[coordinate[2]] &&
-        !@grid[coordinate[2]].nil?
+      row = [@grid[coordinate[0]], @grid[coordinate[1]], @grid[coordinate[2]]]
+      next if row.any?(&:nil?)
+
+      row.uniq.length == 1
     end
 
-    return won_rows.first unless won_rows.empty?
-
-    []
+    won_rows.flatten
   end
 
   private
