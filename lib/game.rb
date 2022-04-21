@@ -25,7 +25,8 @@ class Game
 
       row.uniq.length == 1
     end
-
+  
+    { winning_row: won_rows.flatten }
   end
 
 

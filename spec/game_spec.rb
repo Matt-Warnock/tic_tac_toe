@@ -29,7 +29,7 @@ RSpec.describe Game do
     end
   end
 
-  xdescribe '#evaluate_game_state' do
+  describe '#evaluate_game_state' do
     it 'confirms first row win' do
       game = described_class.new
       game.play_turn(:x, 0)
