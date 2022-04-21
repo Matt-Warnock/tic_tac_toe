@@ -5,6 +5,7 @@ class Game
 
   def initialize
     @grid = []
+    @move_counter = 0
     @row_coordinates = [
       [0, 1, 2], [3, 4, 5], [6, 7, 8],
       [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -16,6 +17,7 @@ class Game
     validate_play(coordinate)
 
     @grid[coordinate] = player_id
+    @move_counter += 1
   end
 
   def evaluate_game_state
@@ -25,13 +27,17 @@ class Game
 
       row.uniq.length == 1
     end
-  
-    { winning_row: won_rows.flatten }
+    {
+      winning_row: won_rows.flatten,
+      game_end: game_ended?(won_rows)
+    }
   end
 
-
-
   private
+
+  def game_ended?(won_rows)
+    won_rows.any? || @move_counter > 8
+  end
 
   def validate_play(coordinate)
     raise 'Invalid position' unless (0..8).include?(coordinate)

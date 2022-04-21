@@ -30,15 +30,79 @@ RSpec.describe Game do
   end
 
   describe '#evaluate_game_state' do
-    it 'confirms first row win' do
-      game = described_class.new
-      game.play_turn(:x, 0)
-      game.play_turn(:x, 1)
-      game.play_turn(:x, 2)
+    context 'when game win' do
+      it 'returns winning row' do
+        game = described_class.new
+        game.play_turn(:x, 0)
+        game.play_turn(:x, 1)
+        game.play_turn(:x, 2)
 
-      result = game.evaluate_game_state
+        winning_coordinates = [0, 1, 2]
+        result = game.evaluate_game_state
 
-      expect(result[:winning_row]).to eq([0, 1, 2])
+        expect(result[:winning_row]).to eq(winning_coordinates)
+      end
+
+      it 'game end returns as true' do
+        game = described_class.new
+        game.play_turn(:x, 0)
+        game.play_turn(:x, 1)
+        game.play_turn(:x, 2)
+
+        result = game.evaluate_game_state
+
+        expect(result[:game_end]).to eq(true)
+      end
+    end
+
+    context 'when no win evaluated' do
+      it 'returns empty winning_row array' do
+        game = described_class.new
+
+        result = game.evaluate_game_state
+
+        expect(result[:winning_row]).to eq([])
+      end
+
+      it 'game end returns as false' do
+        game = described_class.new
+
+        result = game.evaluate_game_state
+
+        expect(result[:game_end]).to eq(false)
+      end
+    end
+
+    context 'when all moves have played with no win' do
+      it 'returns empty winning_row array' do
+        game = described_class.new
+        drawing_game(game)
+
+        result = game.evaluate_game_state
+
+        expect(result[:winning_row]).to eq([])
+      end
+
+      it 'game end returns as true' do
+        game = described_class.new
+        drawing_game(game)
+
+        result = game.evaluate_game_state
+
+        expect(result[:game_end]).to eq(true)
+      end
+
+      def drawing_game(game)
+        game.play_turn(:x, 0)
+        game.play_turn(:o, 1)
+        game.play_turn(:x, 3)
+        game.play_turn(:o, 6)
+        game.play_turn(:x, 7)
+        game.play_turn(:o, 4)
+        game.play_turn(:x, 2)
+        game.play_turn(:o, 5)
+        game.play_turn(:x, 8)
+      end
     end
 
     it 'confirms second row win' do
@@ -79,14 +143,6 @@ RSpec.describe Game do
       game.play_turn(:o, 3)
       game.play_turn(:x, 4)
       game.play_turn(:x, 5)
-
-      result = game.evaluate_game_state
-
-      expect(result[:winning_row]).to eq([])
-    end
-
-    it 'returns empty array if no win evaluated' do
-      game = described_class.new
 
       result = game.evaluate_game_state
 
