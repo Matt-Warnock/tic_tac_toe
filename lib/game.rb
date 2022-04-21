@@ -27,20 +27,24 @@ class Game
 
       row.uniq.length == 1
     end
+    format_result(won_rows)
+  end
+
+  private
+
+  def validate_play(coordinate)
+    raise 'Invalid position' unless (0..8).include?(coordinate)
+    raise 'Position already taken' unless @grid[coordinate].nil?
+  end
+
+  def format_result(won_rows)
     {
       winning_row: won_rows.flatten,
       game_end: game_ended?(won_rows)
     }
   end
 
-  private
-
   def game_ended?(won_rows)
     won_rows.any? || @move_counter > 8
-  end
-
-  def validate_play(coordinate)
-    raise 'Invalid position' unless (0..8).include?(coordinate)
-    raise 'Position already taken' unless @grid[coordinate].nil?
   end
 end
