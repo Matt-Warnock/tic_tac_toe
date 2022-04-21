@@ -10,6 +10,12 @@ RSpec.describe Game do
         .from(nil).to(:x)
     end
 
+    it 'adds a game turn to the counter' do
+      expect { subject.play_turn(:x, 0) }
+        .to change { subject.instance_variable_get(:@move_counter) }
+        .from(0).to(1)
+    end
+
     it 'raises error if existing game turn on coordinate' do
       game = described_class.new
       game.play_turn(:x, 0)
